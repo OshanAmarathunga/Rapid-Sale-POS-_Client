@@ -1,0 +1,27 @@
+#loginForm{
+    width: 350px;
+    margin-top: 70px;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: palegoldenrod;
+}
+#logoSignature{
+    margin-top: 150px;
+}
+
+#loginPage {
+  background-color: gold;
+    padding: 70px;
+
+}
+
+#logoFont{
+    font-size: 50px;
+    font-weight: bold;
+    font-family: "MS UI Gothic";
+}
+
+#image{
+
+}
