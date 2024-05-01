@@ -5,6 +5,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+  /* background: linear-gradient(#3506d9,#42006C);
+  height: 100vh; */
+  background-image: url('components/login/image/login\ background\ image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 100vh;
+  width: 99%;
+  
 }
 
 code {
