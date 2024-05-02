@@ -99,7 +99,7 @@ function Home() {
               />
               <div class="card-body">
                 <Link to={"/settings"}>
-                <button className="button">Settings</button>
+                <button className="button">User</button>
                 </Link>
               </div>
             </div>
