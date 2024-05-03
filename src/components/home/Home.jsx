@@ -51,7 +51,9 @@ function Home() {
                 id="image"
               />
               <div class="card-body">
+                <Link to={"/customer"}>
                 <button className="button"> Customer</button>
+                </Link>
               </div>
             </div>
           </div>
