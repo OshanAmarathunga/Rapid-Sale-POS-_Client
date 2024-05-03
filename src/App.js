@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserManagement from "./components/userManagement/UserManagement";
 import Customer from "./components/customer/Customer";
 import Item from "./components/item/Item";
+import Stock from "./components/stock/Stock";
 
 function App() {
   useEffect(() => {
@@ -29,6 +30,7 @@ function App() {
           <Route path="/settings" element={<UserManagement/>}></Route>
           <Route path="/customer" element={<Customer/>}></Route>
           <Route path="/item" element={<Item/>}></Route>
+          <Route path="/stock" element={<Stock/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
