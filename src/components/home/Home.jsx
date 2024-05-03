@@ -120,7 +120,9 @@ function Home() {
                 id="image"
               />
               <div class="card-body">
+                <Link to="/reprint">
                 <button className="button">Reprint</button>
+                </Link>
               </div>
             </div>
           </div>
