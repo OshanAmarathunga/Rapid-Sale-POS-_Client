@@ -5,33 +5,29 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 
 function Bill() {
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
+  const inputRef3 = useRef(null);
+  const inputRefBtnPay = useRef(null);
 
-  const inputRef1=useRef(null);
-  const inputRef2=useRef(null);
-  const inputRef3=useRef(null);
-  const inputRefBtnPay=useRef(null);
-
-  const handleKeyDown=(event,nextInputRef)=>{
-    if(event.keyCode==187){
+  const handleKeyDown = (event, nextInputRef) => {
+    if (event.keyCode == 187) {
       event.preventDefault();
       nextInputRef.current.focus();
     }
-
   };
 
-  const handleKeyDownEnter=(event,nextInputRef,previousInputRef)=>{
-  if(event.keyCode==13){
+  const handleKeyDownEnter = (event, nextInputRef, previousInputRef) => {
+    if (event.keyCode == 13) {
       event.preventDefault();
       nextInputRef.current.focus();
     }
 
-    if(event.keyCode==38){
+    if (event.keyCode == 38) {
       event.preventDefault();
       previousInputRef.current.focus();
     }
-
   };
-
 
   return (
     <div>
@@ -48,12 +44,12 @@ function Bill() {
           <div className="col-lg-2 col-sm-12 ">
             <div class="input-group input-group-sm mb-1 mt-2  ">
               <input
-              ref={inputRef1}
+                ref={inputRef1}
                 type="text"
                 class="form-control text-center fw-bold shadow "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
-                onKeyDown={(event)=>handleKeyDown(event,inputRef2)}
+                onKeyDown={(event) => handleKeyDown(event, inputRef2)}
               />
             </div>
           </div>
@@ -274,34 +270,51 @@ function Bill() {
                 </div>
                 <div class="input-group input-group-sm mb-1 mt-2  ">
                   <input
-                   ref={inputRef2}
+                    ref={inputRef2}
                     type="text"
                     class="form-control text-center my-1 fw-semibold"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-sm"
                     placeholder="Type"
-                    onKeyDown={(event)=>handleKeyDownEnter(event,inputRef3,inputRef1)}
+                    onKeyDown={(event) =>
+                      handleKeyDownEnter(event, inputRef3, inputRef1)
+                    }
                   />
                 </div>
                 <div class="input-group input-group-sm mb-1 mt-2  ">
                   <input
-                  ref={inputRef3}
+                    ref={inputRef3}
                     type="text"
                     class="form-control text-center my-1 fw-semibold"
                     aria-label="Sizing example input"
                     aria-describedby="inputGroup-sizing-sm"
                     placeholder="Money"
-                    onKeyDown={(event)=>handleKeyDownEnter(event,inputRefBtnPay,inputRef2)}
+                    onKeyDown={(event) =>
+                      handleKeyDownEnter(event, inputRefBtnPay, inputRef2)
+                    }
                   />
                 </div>
                 <div id="paymentButton">
-                  <button ref={inputRefBtnPay} type="button" class="btn btn-outline-danger shadow ">
+                  <button
+                    ref={inputRefBtnPay}
+                    type="button"
+                    class="btn btn-outline-danger shadow "
+                  >
                     Pay
                   </button>
                 </div>
                 <div class="d-flex justify-content-end">
+                  <Link to="/stock">
+                    <button
+                      type="button"
+                      class="btn btn-outline-warning shadow mx-2 "
+                    >
+                      Stock
+                    </button>
+                  </Link>
+
                   <Link to="/">
-                    <button type="button" class="btn btn-outline-warning shadow ">
+                    <button type="button" class="btn btn-outline-light shadow ">
                       Back
                     </button>
                   </Link>
