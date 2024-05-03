@@ -12,6 +12,7 @@ import UserManagement from "./components/userManagement/UserManagement";
 import Customer from "./components/customer/Customer";
 import Item from "./components/item/Item";
 import Stock from "./components/stock/Stock";
+import Reprint from "./components/reprint/Reprint";
 
 function App() {
   useEffect(() => {
@@ -31,6 +32,7 @@ function App() {
           <Route path="/customer" element={<Customer/>}></Route>
           <Route path="/item" element={<Item/>}></Route>
           <Route path="/stock" element={<Stock/>}></Route>
+          <Route path="/reprint" element={<Reprint/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
