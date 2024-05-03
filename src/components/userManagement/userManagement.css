@@ -9,6 +9,7 @@
   display: flex;
   border-radius: 10px;
   justify-content: center;
+  height: 40px;
 }
 
 #tableContainer {
@@ -31,4 +32,7 @@
     margin: 0 auto;
     font-size: smaller;
     border-collapse: collapse;
+}
+#userImage{
+  height: 35px;
 }

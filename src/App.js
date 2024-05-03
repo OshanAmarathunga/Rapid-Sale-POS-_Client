@@ -8,7 +8,8 @@ import "aos/dist/aos.css";
 import { useEffect } from "react";
 import Bill from "./components/bill/Bill";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Settings from "./components/settings/Settings";
+import UserManagement from "./components/userManagement/UserManagement";
+import Customer from "./components/customer/Customer";
 
 function App() {
   useEffect(() => {
@@ -24,7 +25,8 @@ function App() {
           <Route path="/" element={<Home/>}></Route>
           <Route path="/bill" element={<Bill/>}></Route>
           <Route path="/login" element={<Login/>}></Route>
-          <Route path="/settings" element={<Settings/>}></Route>
+          <Route path="/settings" element={<UserManagement/>}></Route>
+          <Route path="/customer" element={<Customer/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
