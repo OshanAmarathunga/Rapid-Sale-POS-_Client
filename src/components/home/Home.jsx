@@ -10,14 +10,18 @@ import grnImage from "./images/grn.png";
 import reportImage from "./images/report.png";
 import { Link } from "react-router-dom";
 import Bill from "../bill/Bill";
+import { useAuth } from "../../utils/AuthContext";
 
 function Home() {
+
+  const {logout}=useAuth();
+
   return (
     <div>
       <div className="row d-flex">
         <div className="d-flex  justify-content-end my-2">
           <Link to ="/login">
-          <button type="button" class="btn btn-outline-light">
+          <button onClick={logout} type="button" class="btn btn-outline-light">
             LogOut
           </button>
           </Link>

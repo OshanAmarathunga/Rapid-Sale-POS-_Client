@@ -1,10 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import "./login.css";
 import loginImage from "./image/login image.png";
+import axios from "axios";
+import { useAuth } from "../../utils/AuthContext";
+import { useNavigate } from "react-router-dom";
+import { Bounce, ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const data = {
+      username: username,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:8080/auth/login", data)
+      .then((rsp) => {
+        login(rsp.data);
+        navigate("/");
+      })
+      .catch((e) => {
+        toast.error("Please enter valid Username or Password !", {
+          position: "top-center",
+          theme: "colored"
+        });
+      });
+  };
+
   return (
     <div className="container" id="mainContainer">
+      <ToastContainer/>
       <div className="row" id="loginPage">
         <div className="col-lg-6 col-sm-12" id="logoSignature">
           <img src={loginImage} alt="logo" id="image" />
@@ -15,7 +48,7 @@ function Login() {
 
         <div className="col-lg-6 col-sm-12" data-aos="fade-left">
           <div className="container" id="loginForm">
-            <form>
+            <form onSubmit={handleLogin}>
               <div className="mb-3">
                 <label htmlFor="userName" className="form-label">
                   Username
@@ -25,13 +58,23 @@ function Login() {
                   className="form-control"
                   id="userName"
                   aria-describedby="emailHelp"
+                  onChange={(evt) => {
+                    setUsername(evt.target.value);
+                  }}
                 />
               </div>
               <div className="mb-3">
                 <label htmlFor="password" className="form-label">
                   Password
                 </label>
-                <input type="password" className="form-control" id="password" />
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password"
+                  onChange={(evt) => {
+                    setPassword(evt.target.value);
+                  }}
+                />
               </div>
 
               <div className="d-flex justify-content-center">
