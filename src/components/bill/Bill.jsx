@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./bill.css";
-import customerImage from "./image/customer.png";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { useAuth } from "../../utils/AuthContext";
+import axios from "axios";
 
 function Bill() {
+  const {isAuthenticated,jwtToken} =useAuth();
+  const config={
+    headers:{
+      Authorization:`Bearer ${jwtToken}`
+    }
+  }
+
+  useEffect(()=>{
+    if(isAuthenticated){
+      // load the data
+      // axios.get("http://localhost:8080/customer",config)
+      // .then()
+      // .catch();
+    }
+  }
+   ,[isAuthenticated]);
+
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);

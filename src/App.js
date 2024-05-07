@@ -13,6 +13,8 @@ import Customer from "./components/customer/Customer";
 import Item from "./components/item/Item";
 import Stock from "./components/stock/Stock";
 import Reprint from "./components/reprint/Reprint";
+import { AuthProvider } from "./utils/AuthContext";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 function App() {
   useEffect(() => {
@@ -23,18 +25,23 @@ function App() {
 
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home/>}></Route>
-          <Route path="/bill" element={<Bill/>}></Route>
-          <Route path="/login" element={<Login/>}></Route>
-          <Route path="/settings" element={<UserManagement/>}></Route>
-          <Route path="/customer" element={<Customer/>}></Route>
-          <Route path="/item" element={<Item/>}></Route>
-          <Route path="/stock" element={<Stock/>}></Route>
-          <Route path="/reprint" element={<Reprint/>}></Route>
-        </Routes>
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/settings" element={<UserManagement />}></Route>
+              <Route path="/customer" element={<Customer />}></Route>
+              <Route path="/item" element={<Item />}></Route>
+              <Route path="/stock" element={<Stock />}></Route>
+              <Route path="/reprint" element={<Reprint />}></Route>
+              <Route path="/" element={<Home />}></Route>
+              <Route path="/bill" element={<Bill />}></Route>
+            </Route>
+
+            <Route path="/login" element={<Login />}></Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
     </div>
   );
 }
