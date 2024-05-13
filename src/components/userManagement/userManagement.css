@@ -32,7 +32,13 @@
     margin: 0 auto;
     font-size: smaller;
     border-collapse: collapse;
+    
 }
 #userImage{
   height: 35px;
+}
+
+#tableContainer{
+  height: 390px;
+  overflow-y: auto;
 }

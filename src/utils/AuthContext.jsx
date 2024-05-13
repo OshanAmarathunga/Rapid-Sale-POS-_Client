@@ -5,12 +5,18 @@ const AuthContext = createContext({
   jwtToken: null,
   login: () => {},
   logout: () => {},
+  user: ()=>{},
 });
 
 export const AuthProvider =({children})=>{
     const [isAuthenticated, setIsAuthenticated]=useState(false);
     const [jwtToken,setJwtToken]=useState(null);
-    const [user,setUser]=useState(null);
+    const [userRole,setUserRole]=useState(null);
+
+    const user=(role)=>{
+        setUserRole(role);
+        localStorage.setItem('user',role);
+    }
 
     const login=(token)=>{
         setIsAuthenticated(true);
@@ -22,19 +28,22 @@ export const AuthProvider =({children})=>{
         setIsAuthenticated(false);
         setJwtToken(null);
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
     }
 
     useEffect(()=>{
         const token=localStorage.getItem('token');
-        if(token){
+        const user=localStorage.getItem('user');
+        if(token & user){
             setIsAuthenticated(true);
-            setJwtToken(token);
+            setJwtToken(token); 
+            setUserRole(user);
         }
-    },[])
+    },[jwtToken]);
 
 
     return(
-        <AuthContext.Provider value={{isAuthenticated,jwtToken,login,logout}}>
+        <AuthContext.Provider value={{isAuthenticated,jwtToken,login,logout,user,userRole}}>
             {children}
         </AuthContext.Provider>
     )
