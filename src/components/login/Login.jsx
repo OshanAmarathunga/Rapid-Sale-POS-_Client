@@ -4,11 +4,12 @@ import loginImage from "./image/login image.png";
 import axios from "axios";
 import { useAuth } from "../../utils/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Bounce, ToastContainer, toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const { login } = useAuth();
+  const {user} =useAuth();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -18,14 +19,16 @@ function Login() {
     e.preventDefault();
     const data = {
       username: username,
-      password: password,
+      password: password
     };
 
     axios
       .post("http://localhost:8080/auth/login", data)
       .then((rsp) => {
         login(rsp.data);
+        user(username);
         navigate("/");
+        
       })
       .catch((e) => {
         toast.error("Please enter valid Username or Password !", {

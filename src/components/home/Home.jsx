@@ -14,7 +14,7 @@ import { useAuth } from "../../utils/AuthContext";
 
 function Home() {
 
-  const {logout}=useAuth();
+  const {logout,userRole}=useAuth();
 
   return (
     <div>

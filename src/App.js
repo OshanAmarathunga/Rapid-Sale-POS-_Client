@@ -15,6 +15,7 @@ import Stock from "./components/stock/Stock";
 import Reprint from "./components/reprint/Reprint";
 import { AuthProvider } from "./utils/AuthContext";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   useEffect(() => {
@@ -41,6 +42,7 @@ function App() {
             <Route path="/login" element={<Login />}></Route>
           </Routes>
         </BrowserRouter>
+        <ToastContainer/>
       </AuthProvider>
     </div>
   );
