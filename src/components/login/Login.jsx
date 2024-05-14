@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./login.css";
 import loginImage from "./image/login image.png";
 import axios from "axios";
@@ -9,11 +9,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
   const { login } = useAuth();
-  const {user} =useAuth();
+  const {saveUsername} =useAuth();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const inputUsernameRef=useRef(null);
+  const inputPasswordRef=useRef(null);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -26,7 +28,8 @@ function Login() {
       .post("http://localhost:8080/auth/login", data)
       .then((rsp) => {
         login(rsp.data);
-        user(username);
+        
+        saveUsername(username);
         navigate("/");
         
       })
@@ -37,6 +40,14 @@ function Login() {
         });
       });
   };
+
+  const handleKeyDownEnter=(e,next,previous)=>{
+    if(e.keyCode==13){
+      e.preventDefault();
+      next.current.focus();
+    }
+
+  }
 
   return (
     <div className="container" id="mainContainer">
@@ -64,6 +75,10 @@ function Login() {
                   onChange={(evt) => {
                     setUsername(evt.target.value);
                   }}
+                  ref={inputUsernameRef}
+                  onKeyDown={(e)=>{
+                    handleKeyDownEnter(e,inputPasswordRef,inputUsernameRef);
+                  }}
                 />
               </div>
               <div className="mb-3">
@@ -77,6 +92,7 @@ function Login() {
                   onChange={(evt) => {
                     setPassword(evt.target.value);
                   }}
+                  ref={inputPasswordRef}
                 />
               </div>
 

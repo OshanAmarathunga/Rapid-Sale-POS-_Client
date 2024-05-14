@@ -19,7 +19,7 @@ function UserManagement() {
   const [password, setPassword] = useState(null);
   const [role, setRole] = useState(null);
   const [usersList, setUsersList] = useState([]);
-  const { isAuthenticated, jwtToken,userRole } = useAuth();
+  const { isAuthenticated, jwtToken } = useAuth();
   const inputFirstNameRef = useRef(null);
   const inputLastNameRef = useRef(null);
   const inputAgeRef = useRef(null);
@@ -45,6 +45,7 @@ function UserManagement() {
     setNicNumber("");
     setUsername("");
     setPassword("");
+    setRole("");
   };
 
   const handleSubmit = (e) => {
@@ -322,7 +323,12 @@ function UserManagement() {
               class="form-select form-select-sm"
               aria-label="Small select example"
               onChange={(e) => {
-                setRole(e.target.options[e.target.selectedIndex].text);
+                if (e.target.value === "1") {
+                  setRole("Casier");
+                } else if (e.target.value === "2") {
+                  setRole("Admin");
+                }
+            
               }}
               ref={inputRoleRef}
               onKeyDown={(e) => {
@@ -355,7 +361,7 @@ function UserManagement() {
                     (username != "") &
                     (nicNumber != "") &
                     (contactNo != "") &
-                    (password!="")&
+                    // (password!="")&
                     (age != "") &
                     (firstName != "") &
                     (lastName != "")
@@ -376,6 +382,7 @@ function UserManagement() {
                       .then((rsp) => {
                         updateUsersTable();
                         clearTextFields();
+                        setUpdateUser(null);
                         toast.info("User Updated !", {
                           position: "top-center",
                           autoClose: 5000,
@@ -467,6 +474,7 @@ function UserManagement() {
                               setNicNumber(eachUser.nicNumber);
                               setUsername(eachUser.username);
                               setRole(eachUser.userRole);
+                              
                               setUserId(eachUser.id);
                             }}
                           >
