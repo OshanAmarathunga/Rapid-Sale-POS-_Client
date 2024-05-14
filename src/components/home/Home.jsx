@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import billImage from "./images/bill.png";
 import customerImage from "./images/costumer.png";
@@ -11,19 +11,47 @@ import reportImage from "./images/report.png";
 import { Link } from "react-router-dom";
 import Bill from "../bill/Bill";
 import { useAuth } from "../../utils/AuthContext";
+import axios from "axios";
 
 function Home() {
+  const { logout } = useAuth();
+  const { loginUsername } = useAuth();
+  const { jwtToken } = useAuth();
+  const [user, setUser] = useState(null);
 
-  const {logout,userRole}=useAuth();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
+  };
+
+  useEffect(() => {
+       axios.get(
+          "http://localhost:8080/user/" + loginUsername,
+          config
+        )
+        .then((rsp)=>{
+          setUser(rsp.data);
+          
+        })
+        .catch((e)=>{
+          console.log(e);
+        });
+      
+  }, []);
 
   return (
     <div>
       <div className="row d-flex">
         <div className="d-flex  justify-content-end my-2">
-          <Link to ="/login">
-          <button onClick={logout} type="button" class="btn btn-outline-light">
-            LogOut
-          </button>
+          <Link to="/login">
+            <button
+              onClick={logout}
+              type="button"
+              class="btn btn-outline-light"
+            >
+              LogOut
+            </button>
           </Link>
         </div>
       </div>
@@ -39,7 +67,7 @@ function Home() {
               />
               <div class="card-body">
                 <Link to="/bill">
-                <button className="button"> Bill</button>
+                  <button className="button"> Bill</button>
                 </Link>
               </div>
             </div>
@@ -56,7 +84,7 @@ function Home() {
               />
               <div class="card-body">
                 <Link to={"/customer"}>
-                <button className="button"> Customer</button>
+                  <button className="button"> Customer</button>
                 </Link>
               </div>
             </div>
@@ -88,7 +116,7 @@ function Home() {
               />
               <div class="card-body">
                 <Link to="/item">
-                <button className="button"> Item</button>
+                  <button className="button"> Item</button>
                 </Link>
               </div>
             </div>
@@ -107,7 +135,7 @@ function Home() {
               />
               <div class="card-body">
                 <Link to={"/settings"}>
-                <button className="button">User</button>
+                  <button className="button">User</button>
                 </Link>
               </div>
             </div>
@@ -125,7 +153,7 @@ function Home() {
               />
               <div class="card-body">
                 <Link to="/reprint">
-                <button className="button">Reprint</button>
+                  <button className="button">Reprint</button>
                 </Link>
               </div>
             </div>
