@@ -99,7 +99,7 @@ function UserManagement() {
                 progress: undefined,
                 theme: "colored",
               });
-            } else {
+            } else {  
               toast.error("Please check the text fields !", {
                 position: "top-center",
                 autoClose: 5000,

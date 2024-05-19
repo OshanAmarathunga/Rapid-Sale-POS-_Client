@@ -16,7 +16,7 @@ export const AuthProvider =({children})=>{
 
     const saveUsername=(username)=>{
         setLoginUsername(username);
-        localStorage.setItem('loginUsername',loginUsername);
+        localStorage.setItem('loginUsername',username);
     }
 
     const login=(token)=>{
@@ -40,7 +40,7 @@ export const AuthProvider =({children})=>{
             setJwtToken(token); 
             setLoginUsername(user);
         }
-    },[jwtToken]);
+    },[jwtToken,loginUsername]);
 
 
     return(

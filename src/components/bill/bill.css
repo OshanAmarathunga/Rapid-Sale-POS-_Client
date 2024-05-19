@@ -10,9 +10,13 @@
 #colam{
     margin-right: 1px;
 }
+#inputBarcode{
+  background-color: #eaeaea;
+  
+}
 
 #timeDatecard{
-  height: 100px;
+  height: 70px;
   background: linear-gradient(to bottom, #221364, hsl(231, 67%, 30%));
   color: white;
   border-radius: 5px;
