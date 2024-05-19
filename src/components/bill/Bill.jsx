@@ -1,32 +1,46 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./bill.css";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useAuth } from "../../utils/AuthContext";
 import axios from "axios";
+import CurrentDateTime from "./CurrentDateTime";
+import Swal from "sweetalert2";
 
 function Bill() {
-  const {isAuthenticated,jwtToken} =useAuth();
-  const config={
-    headers:{
-      Authorization:`Bearer ${jwtToken}`
-    }
-  }
+  const [loginRoleName, setLoginRoleName] = useState("");
+  const [inputBarcode, setInputBarcode] = useState("");
+  const [getItem, setGetItem] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [qty, setQty] = useState("");
+  const [markedPrice, setMarkedPrice] = useState("");
+  const [ourPrice, setOurPrice] = useState("");
+  const [discount, setDiscount] = useState("");
 
-  useEffect(()=>{
-    if(isAuthenticated){
-      // load the data
-      // axios.get("http://localhost:8080/customer",config)
-      // .then()
-      // .catch();
-    }
-  }
-   ,[isAuthenticated]);
+  const { isAuthenticated, jwtToken, loginUsername } = useAuth();
+  const config = {
+    headers: {
+      Authorization: `Bearer ${jwtToken}`,
+    },
+  };
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/user/" + loginUsername, config)
+      .then((rsp) => {
+        setLoginRoleName(rsp.data.firstName);
+      })
+      .catch((e) => {
+        alert(e);
+      });
+  }, [isAuthenticated]);
 
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
   const inputRefBtnPay = useRef(null);
+  const inputRefQty = useRef(null);
+  const inputRefDiscount = useRef(null);
 
   const handleKeyDown = (event, nextInputRef) => {
     if (event.keyCode == 187) {
@@ -47,6 +61,24 @@ function Bill() {
     }
   };
 
+  const searchItem = (event, next) => {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      axios
+        .get("http://localhost:8080/itemByBarcode/" + inputBarcode, config)
+        .then((rsp) => {
+          setGetItem(rsp.data);
+          setItemName(rsp.data.name);
+          setMarkedPrice(rsp.data.markedPrice);
+          setOurPrice(rsp.data.ourPrice);
+          next.current.focus();
+        })
+        .catch((e) => {
+          Swal.fire("Wrong Barcode ! ");
+        });
+    }
+  };
+
   return (
     <div>
       <div className="container" id="billContainer">
@@ -54,7 +86,7 @@ function Bill() {
           <div className="col-lg-2 col-sm-12 mt-1">
             <div class="card text-center shadow ">
               <div class="card-body text-center " id="casierCard">
-                <h6>Amandi</h6>
+                <h6>{loginRoleName}</h6>
               </div>
             </div>
           </div>
@@ -63,11 +95,19 @@ function Bill() {
             <div class="input-group input-group-sm mb-1 mt-2  ">
               <input
                 ref={inputRef1}
+                placeholder="Enter Barcode..."
                 type="text"
                 class="form-control text-center fw-bold shadow "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
-                onKeyDown={(event) => handleKeyDown(event, inputRef2)}
+                onKeyDown={(event) => {
+                  handleKeyDown(event, inputRef2);
+                  searchItem(event, inputRefQty);
+                }}
+                id="inputBarcode"
+                onChange={(e) => {
+                  setInputBarcode(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -79,16 +119,25 @@ function Bill() {
                 class="form-control fw-bold shadow "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
+                value={itemName}
               />
             </div>
           </div>
           <div className="col-lg-1 col-sm-12 p-0 mx-1 ">
             <div class="input-group input-group-sm mb-3 mt-2">
               <input
+                ref={inputRefQty}
                 type="text"
                 class="form-control text-center fw-bold shadow "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
+                value={qty}
+                onChange={(e) => {
+                  setQty(e.target.value);
+                }}
+                onKeyDown={(e)=>{
+                  handleKeyDownEnter(e,inputRefDiscount,inputRefDiscount);
+                }}
               />
             </div>
           </div>
@@ -99,6 +148,10 @@ function Bill() {
                 class="form-control shadow "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
+                value={markedPrice}
+                onChange={(e) => {
+                  setMarkedPrice(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -109,16 +162,25 @@ function Bill() {
                 class="form-control shadow "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
+                value={ourPrice}
+                onChange={(e) => {
+                  setOurPrice(e.target.value);
+                }}
               />
             </div>
           </div>
           <div className="col-lg-1 col-sm-12 p-0 mx-1">
             <div class="input-group input-group-sm mb-3 mt-2">
               <input
+                ref={inputRefDiscount}
                 type="text"
                 class="form-control shadow-lg "
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
+                value={discount}
+                onChange={(e) => {
+                  setDiscount(e.target.value);
+                }}
               />
             </div>
           </div>
@@ -130,9 +192,9 @@ function Bill() {
             <div className="col my-1 ">
               <div class="card text-center shadow ">
                 <div class="card-body" id="timeDatecard">
-                  <h6>3.35.00 pm</h6>
-                  <h6>2024/04/29</h6>
-                  <h4>INV# 456</h4>
+                  <h6>
+                    <CurrentDateTime />
+                  </h6>
                 </div>
               </div>
             </div>
